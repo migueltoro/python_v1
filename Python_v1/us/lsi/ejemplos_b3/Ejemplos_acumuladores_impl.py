@@ -102,6 +102,10 @@ def sorted2(iterable:Iterable[E], key:Callable[[E],R]=identity,reverse:bool=Fals
                     ls[i], ls[j] = ls[j], ls[i]          
     return ls
 
+def str_iter(iterable:Iterable[E],sep:str=',',prefix:str='{',suffix:str='}',
+             key:Callable[[E],str]=str)->str:
+    r:str = sep.join(key(x) for x in iterable)
+    return f"{prefix}{r}{suffix}"
 
 
 if __name__ == '__main__':

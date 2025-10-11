@@ -14,6 +14,44 @@ from math import sqrt
 
 E = TypeVar('E')
 
+'''
+Acumuladores
+    sum(it) suma los elementos del iterable it
+    min(it,key) minimo de los elementos del iterable it según la función key
+    max(it,key) máximo de los elementos del iterable it según la función key
+    any(it) True si algún elemento del iterable it es True
+    all(it) True si todos los elementos del iterable it son True
+    all_different(it) True si todos los elementos del iterable it son distintos
+    mean(it) media de los elementos del iterable it
+    tolist(it) convierte el iterable it en una lista
+    toset(it) convierte el iterable it en un conjunto
+    reduce(f,it) aplica la función f a los elementos del iterable it de forma acumulativa
+    first(it,p) devuelve el primer elemento del iterable it que cumple el predicado p
+    count_if(it,p) cuenta los elementos del iterable it que cumplen el predicado p
+    first_index_if(it,p) devuelve el índice del primer elemento del iterable it que cumple el predicado p o -1 si no existe
+    first_and_last(it) devuelve una tupla con el primer y el último elemento del iterable it o None si está vacío
+       
+    grouping_reduce(it,key,op,value,andThen) agrupa los elementos del iterable it según la función key y aplica 
+        la función op a los valores obtenidos aplicando la función value a cada elemento. 
+        Si se proporciona la función andThen se aplica a los resultados de op
+    grouping_list(it,key,value,andThen) agrupa los elementos del iterable it según la función key y crea
+        una lista con los valores obtenidos aplicando la función value a cada elemento.
+        Si se proporciona la función andThen se aplica a las listas obtenidas
+    grouping_set(it,key,value,andThen) agrupa los elementos del iterable it según la función key y crea
+        un conjunto con los valores obtenidos aplicando la función value a cada elemento.
+        Si se proporciona la función andThen se aplica a los conjuntos obtenidos
+    groups_size(it,key,value) agrupa los elementos del iterable it según la función key y cuenta
+        los valores obtenidos aplicando la función value a cada elemento
+    join(it1,it2,key1,key2) une los elementos de los iterables it1 e it2 según las funciones key1 y key2
+    str_iter(it,sep,prefix,suffix,key) devuelve una cadena con los elementos del iterable it separados por sep, 
+        con prefijo prefix y sufijo suffix y aplicando la función key a cada elemento
+    str_dict(d,key1,key2,sep,prefix,suffix) como str_iter pero para diccionarios
+    str_set(s,sep,prefix,suffix,key) como str_iter pero para conjuntos
+    str_list(l,sep,prefix,suffix,key) como str_iter pero para listas
+    str_tuple(t,sep,prefix,suffix,key) como str_iter pero para tuplas
+    
+'''
+
 dias = ["lunes", "martes", "miercoles", "jueves","viernes", "sabado", "domingo"]
 
 texto = "En un lugar de la Mancha de cuyo nombre no quiero acordarme"

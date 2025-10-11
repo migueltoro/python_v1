@@ -7,7 +7,7 @@ Created on 7 jul 2024
 import unittest
 import pytest
 from fractions import Fraction
-from us.lsi.ejemplos_b2.Ejemplos_genericos import PolinomioF
+from us.lsi.ejemplos_b3.Ejemplos_genericos import PolinomioF
 
 class TestPolinomio2(unittest.TestCase):
 
