@@ -5,9 +5,11 @@ Created on 18 sept 2022
 '''
 
 from us.lsi.tools.File import absolute_path, encoding
+from typing import Iterable
 
 def test0():
     print(encoding(absolute_path('/resources/lin_quijote.txt')))
+    
     
 def test1():
     # Forma clásica
@@ -59,18 +61,40 @@ def test3():
     dt2: dict[int,int] = {3:56,78:67,45:45}
     print(dt2)
     
+def test4():
+    # Forma clásica
+    for x in range(3, 70):
+        if x % 3 == 0:
+            t = x**2
+            print(t)
+    # Forma por comprensión   
+    r:Iterable[int] = (x**2 for x in range(3, 70) if x % 3 == 0)
+    print('________________________________________')
+    print(r)
+    for e in r:
+        print(e)
+    
+    # Forma por explícita
+   
+    r2: Iterable[int] = (3,56,78,67,45) # En realidad es una tupla que como sabemos es iterable
+    print('________________________________________')
+    print(r2)
+    for e in r2:
+        print(e)
+        
+    
 '''
 Usos 
 '''
 
     
-def test4():
+def test5():
     nombres:list[str] = ["Miguel", "Ana", "Jose Maria", "Guillermo", "Maria", "Luisa"]
     ranking:dict[str,int] = {nombre: nombres.index(nombre) for nombre in nombres}
     print(f'ranking = {ranking}')
     
 
-def test5():  
+def test6():  
     texto:str = "este es un pequeño texto para probar la siguiente definicion por comprension"
     iniciales = {p[0] for p in texto.split()}
     palabras = {p for p in texto.split()}
