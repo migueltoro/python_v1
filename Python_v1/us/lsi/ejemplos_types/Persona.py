@@ -10,7 +10,6 @@ from enum import Enum, auto
 import locale
 from us.lsi.ejemplos_types.Direccion import Direccion
 from datetime import date, datetime
-from dateutil.relativedelta import relativedelta
 
 class Horoscopo(Enum):
     Acuario = auto()

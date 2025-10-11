@@ -3,10 +3,7 @@ Created on 19 nov 2023
 
 @author: migueltoro
 '''
-from us.lsi.bancos.Cuentas import Cuentas
-from us.lsi.bancos.Empleados import Empleados
-from us.lsi.bancos.Prestamos import Prestamos
-from us.lsi.bancos.Personas import Personas
+
 from us.lsi.bancos.Banco import Banco
 from us.lsi.tools.Iterable import str_iter
 from us.lsi.tools.Dict import str_dict

@@ -7,7 +7,7 @@ Created on 25 jul. 2020
 from typing import OrderedDict,Iterable,Optional
 from us.lsi.tools.File import lineas_de_fichero, encoding, absolute_path, iterable_de_fichero
 from us.lsi.tools.Dict import str_dict, dict_invert_set
-from us.lsi.tools.Iterable import flat_map,first,distinct,str_iter,grouping_set,groups_size,count_if,\
+from us.lsi.tools.Iterable import flat_map,first,distinct,str_iter,grouping_set,groups_size,count,\
     flat_map_enumerate
 from collections import Counter
 import re
@@ -39,19 +39,19 @@ def palabras_lineas(file:str) -> Iterable[tuple[int,str]]:
     return pl
 
 def numero_de_lineas(file: str) -> int:
-    return count_if(lineas_de_libro(file))
+    return count(lineas_de_libro(file))
 
 def numero_de_palabras_no_huecas(file:str) -> int:
-    return count_if(palabras_no_huecas(file)) 
+    return count(palabras_no_huecas(file)) 
 
 def numero_de_palabras_distintas_no_huecas(file:str) -> int:    
-    return count_if(palabras_no_huecas_distintas(file))           
+    return count(palabras_no_huecas_distintas(file))           
 
 def longitud_media_de_lineas(file:str) -> float:
     return mean(len(ln) for ln in lineas_de_fichero(file))
 
 def numero_de_lineas_vacias(file:str) -> int:
-    return count_if(ln for ln in lineas_de_libro(file) if len(ln) == 0)
+    return count(ln for ln in lineas_de_libro(file) if len(ln) == 0)
 
 def linea_mas_larga(file:str) -> str:
     return max(lineas_de_libro(file), key= lambda x:len(x))

@@ -6,7 +6,7 @@ Created on 26 jun 2023
 
 from __future__ import annotations
 from us.lsi.biblioteca.Prestamo import Prestamo
-from us.lsi.tools.File import lineas_de_fichero, absolute_path, root_project
+from us.lsi.tools.File import lineas_de_fichero, absolute_path
 from typing import Optional
 
 class Prestamos:  

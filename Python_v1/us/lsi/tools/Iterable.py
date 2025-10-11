@@ -97,7 +97,7 @@ def limit(iterable:Iterable[E],limit:int) -> Iterable[E]:
         else:
             break
         
-def count_if(iterable:Iterable[E],predicate:Callable[[E],bool]=lambda _:True)->int:
+def count(iterable:Iterable[E],predicate:Callable[[E],bool]=lambda _:True)->int:
     n = 0
     for e in iterable:
         if predicate(e):
@@ -137,7 +137,7 @@ def first_index_true(iterable:Iterable[bool],default:int=-1)->int:
             return i
     return default
 
-def first_index_if(iterable:Iterable[E],predicate:Callable[[E],bool],default:int=-1)->int:
+def first_index(iterable:Iterable[E],predicate:Callable[[E],bool],default:int=-1)->int:
     for i,e in enumerate(iterable):
         if predicate(e):
             return i
@@ -246,7 +246,7 @@ def test1():
     
 def test2():
     print(str_iter(lineas_de_fichero('../../../datos/datos.txt')))
-    print(first_index_if((int(e) for e in lineas_de_fichero('../../../datos/datos.txt')),lambda x: x==7))
+    print(first_index((int(e) for e in lineas_de_fichero('../../../datos/datos.txt')),lambda x: x==7))
     print(first_and_last(range(3,500,29)))
     print(list(zip([1,2,3,5],[6,7,8,9,10],[11,12,13,14,15]))) 
     print(list(aleatorios(10,50,1000)))

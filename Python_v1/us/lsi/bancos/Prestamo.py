@@ -5,7 +5,7 @@ Created on 13 nov 2023
 '''
 
 from __future__ import annotations
-from dataclasses import dataclass, astuple
+from dataclasses import dataclass
 from datetime import date, datetime
 from dateutil.relativedelta import relativedelta
 

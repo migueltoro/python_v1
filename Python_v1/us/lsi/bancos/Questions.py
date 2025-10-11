@@ -5,25 +5,15 @@ Created on 19 nov 2023
 '''
 
 from __future__ import annotations
-from dataclasses import dataclass, astuple, asdict
-from us.lsi.tools.File import absolute_path
-from us.lsi.tools.Iterable import str_iter, grouping_reduce
-from us.lsi.tools.Dict import str_dict
 from us.lsi.tools.Optional import optional_get, optional_is_empty
-from datetime import date, datetime
+from datetime import date
 from us.lsi.ejemplos_types.Persona import Persona
-from us.lsi.biblioteca.Usuarios import Usuarios
-from typing import Optional, Callable
+from typing import Optional
 from collections import Counter
 from statistics import mean
 
-from us.lsi.bancos.Cuenta import Cuenta
-from us.lsi.bancos.Cuentas import Cuentas
 from us.lsi.bancos.Empleado import Empleado
 from us.lsi.bancos.Empleados import Empleados
-from us.lsi.bancos.Prestamo import Prestamo
-from us.lsi.bancos.Prestamos import Prestamos
-from us.lsi.bancos.Personas import Personas
 from us.lsi.bancos.Banco import Banco
 
 '''

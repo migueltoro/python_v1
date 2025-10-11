@@ -6,7 +6,7 @@ Created on 27 oct 2022
 from __future__ import annotations
 from typing import TypeVar, Callable, Iterable
 from us.lsi.tools.File import absolute_path
-from us.lsi.tools.Iterable import all_pairs, first_index_if
+from us.lsi.tools.Iterable import all_pairs, first_index
 from fractions import Fraction
 from functools import reduce
 from operator import mul
@@ -56,7 +56,7 @@ class Matriz_field(MatrizC[S]):
     def __busca_primera_fila(self,c:int)->int:
         zero:S = self.field.zero()
         it:Iterable[S]=(self.datos[i][c] for i in range(c,len(self.datos)))
-        return first_index_if(it, lambda e: e!=zero)
+        return first_index(it, lambda e: e!=zero)
     
     def __multiplica_fila_por_factor(self,f:int,factor:S)->None:
         self.datos[f] = [e*factor for e in self.datos[f]]
