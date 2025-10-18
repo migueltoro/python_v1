@@ -29,9 +29,10 @@ Acumuladores
     toset(it) convierte el iterable it en un conjunto
     reduce(f,it) aplica la función f a los elementos del iterable it de forma acumulativa
     first(it,p) devuelve el primer elemento del iterable it que cumple el predicado p
-    count_if(it,p) cuenta los elementos del iterable it que cumplen el predicado p
-    first_index_if(it,p) devuelve el índice del primer elemento del iterable it que cumple el predicado p o -1 si no existe
+    count(it,p) cuenta los elementos del iterable it que cumplen el predicado p
+    first_index(it,p) devuelve el índice del primer elemento del iterable it que cumple el predicado p o -1 si no existe
     first_and_last(it) devuelve una tupla con el primer y el último elemento del iterable it o None si está vacío
+    Counter(it) devuelve un Counter con las frecuencias de los elementos del iterable it
        
     grouping_reduce(it,key,op,value,andThen) agrupa los elementos del iterable it según la función key y aplica 
         la función op a los valores obtenidos aplicando la función value a cada elemento. 
