@@ -36,6 +36,10 @@ class Ruta:
     def n(self)->int:
         return self.__n
     
+    def intervalo(self, i:int) -> Intervalo:
+        assert 0 <= i < self.__n-1, f'Índice {i} fuera de rango [0,{self.__n-1}]'
+        return Intervalo.of(self.marcas[i],self.marcas[i+1])
+    
     def __str__(self)->str:
         return '\n'.join(str(m) for m in self.marcas) 
 
@@ -50,23 +54,22 @@ class Ruta:
     @property
     def velocidad_media(self) -> float:
         return self.longitud/self.tiempo
-    
-    def intervalo(self, i:int) -> Intervalo:
-        assert 0 <= i < self.__n-1, f'Índice {i} fuera de rango [0,{self.__n-1}]'
-        return Intervalo.of(self.marcas[i],self.marcas[i+1])
         
     @property
     def desnivel_creciente_acumulado(self) -> float:
         return sum(self.intervalo(i).longitud for i in range(0,self.n-1) if self.intervalo(i).desnivel > 0)
     
     @property
-    def media_tiempo2(self) -> float:
-        r:float= 0.
-        n:int= 0
-        for i in range(0,self.n-1):
-            r += self.intervalo(i).tiempo
-            n +=1
-        return r/n
+    def media_tiempo(self) -> float:
+        return mean(self.intervalo(i).tiempo for i in range(0,self.n-1))
+    
+    @property
+    def desnivel_decreciente_acumulado(self) -> float:
+        return sum(self.intervalo(i).longitud for i in range(0,self.n-1) if self.intervalo(i).desnivel < 0)
+            
+    @property
+    def media_desnivel_decreciente_acumulado(self) -> float:
+        return mean(self.intervalo(i).longitud for i in range(0,self.n-1) if self.intervalo(i).desnivel < 0)
     
     @property
     def tiempo2(self) -> float:
@@ -91,14 +94,16 @@ class Ruta:
         return r
     
     @property
-    def desnivel_decreciente_acumulado(self) -> float:
-        return sum(self.intervalo(i).longitud for i in range(0,self.n-1) if self.intervalo(i).desnivel < 0)
-            
-    @property
-    def media_desnivel_decreciente_acumulado(self) -> float:
-        return mean(self.intervalo(i).longitud for i in range(0,self.n-1) if self.intervalo(i).desnivel < 0)
+    def media_tiempo2(self) -> float:
+        r:float= 0.
+        n:int= 0
+        for i in range(0,self.n-1):
+            r += self.intervalo(i).tiempo
+            n +=1
+        return r/n
     
     
+       
     @property
     def media_desnivel_decreciente_acumulado2(self) -> Optional[float]:
         r:float= 0.
@@ -223,16 +228,20 @@ class Ruta:
 if __name__ == '__main__':
     r = Ruta.parse(absolute_path("resources/ruta.csv"));
 #    print(r.marcas[:30])
-#    print(r)
+    print(r)
     print("__________")
 #    r.mostrar_altitud()
     r.mostrar_altitud_google("../../../ficheros/alturasGoogle.html")
 #    r.mostrar_mapa_google("../../../ficheros/mapaGoogle.html")
 #    r.mostrar_mapa_bing("../../../ficheros/mapaBing.html")
+
+    print(r.tiempo)
     print(r.el_mayor)
     print(str_dict(r.contar_por_tipo,sep='\n',suffix="\n__________"))
+   
     print(str_dict(r.contar_por_tipo2,sep='\n',suffix="\n__________"))
     print(str_dict(r.sumar_por_tipo,sep='\n',suffix="\n__________"))
+
     
     
     

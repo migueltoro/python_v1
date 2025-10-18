@@ -4,11 +4,10 @@ Created on 7 dic 2022
 @author: migueltoro
 '''
 
-
 from collections import Counter
 import re
 from us.lsi.tools.File import lineas_de_fichero, absolute_path
-from typing import OrderedDict,Optional
+from typing import Optional
 
 sep = r'[ ,;.\n():?!\"]'
 
@@ -93,7 +92,7 @@ def primera_linea_con_palabra(file:str,palabra:str) -> Optional[str]:
                 break
     return r  
 
-def frecuencias_de_palabras(file:str) -> OrderedDict[str,int]:
+def frecuencias_de_palabras(file:str) -> dict[str,int]:
     ph:set[str] = palabras_huecas()
     lns:list[str] = lineas_de_fichero(file)
     d:dict[str,int]
@@ -104,9 +103,9 @@ def frecuencias_de_palabras(file:str) -> OrderedDict[str,int]:
                     d[p] = d[p]+1
                 else:
                     d[p] = 1          
-    return OrderedDict(sorted(d.items(), key=lambda t: t[0]))
+    return dict(sorted(d.items(), key=lambda t: t[0]))
 
-def palabras_por_frecuencias(file:str) -> OrderedDict[int,set[str]]:
+def palabras_por_frecuencias(file:str) -> dict[int,set[str]]:
     d: dict[str,int] = frecuencias_de_palabras(file)
     r: dict[int,set[str]] = {}
     for p in d.keys():
@@ -115,9 +114,9 @@ def palabras_por_frecuencias(file:str) -> OrderedDict[int,set[str]]:
             r[key].add(p)
         else:
             r[key] = {p}
-    return OrderedDict(sorted(r.items(), key=lambda t: t[0]))  
+    return dict(sorted(r.items(), key=lambda t: t[0]))  
 
-def palabra_en_lineas(file:str) -> OrderedDict[str,set[int]]: 
+def palabra_en_lineas(file:str) -> dict[str,set[int]]: 
     ph:set[str] = palabras_huecas()
     lns:list[str] = lineas_de_fichero(file)
     nl: int = 0
@@ -130,7 +129,7 @@ def palabra_en_lineas(file:str) -> OrderedDict[str,set[int]]:
                 else:
                     d[p] = {nl}              
         nl = nl + 1            
-    return OrderedDict(sorted(d.items(), key=lambda t: t[0]))
+    return dict(sorted(d.items(), key=lambda t: t[0]))
 
 def palabras_frecuentes(file:str, k:int)->list[str]:
     return [p for p,_ in Counter(frecuencias_de_palabras(file)).most_common(k)]

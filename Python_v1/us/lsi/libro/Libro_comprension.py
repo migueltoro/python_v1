@@ -4,16 +4,16 @@ Created on 25 jul. 2020
 @author: migueltoro
 '''
 
-from typing import OrderedDict,Iterable,Optional
+from typing import Iterable,Optional
 from us.lsi.tools.File import lineas_de_fichero, encoding, absolute_path, iterable_de_fichero
 from us.lsi.tools.Dict import str_dict, dict_invert_set
-from us.lsi.tools.Iterable import flat_map,first,distinct,str_iter,grouping_set,groups_size,count,\
+from us.lsi.tools.Iterable import flat_map,first,distinct,str_iter,grouping_set,count,\
     flat_map_enumerate
 from collections import Counter
 import re
 from statistics import mean
 
-sep = r'[ ,;.\n():?!\"]'
+sep = r'[^\wáéíóúÁÉÍÓÚñÑ]+'
 
 def palabras_huecas() -> set[str]:
     lns:list[str] = lineas_de_fichero(absolute_path("resources/palabras_huecas.txt"))
@@ -63,18 +63,18 @@ def linea_numero(file:str,n:int) -> Optional[str]:
     r:Optional[tuple[int,str]] = first(enumerate(lineas_de_libro(file)),p=lambda p:p[0] == n)
     return r[1] if r else None
 
-def frecuencias_de_palabras(file:str) -> OrderedDict[str,int]:
-    d: dict[str,int] = groups_size(palabras_no_huecas(file))
-    return OrderedDict(sorted(d.items(), key=lambda t: t[0]))
+def frecuencias_de_palabras(file:str) -> dict[str,int]:
+    d: Counter[str] = Counter(palabras_no_huecas(file))
+    return dict(sorted(d.items(), key=lambda t: t[1], reverse=True))
 
-def palabras_por_frecuencias(file:str) -> OrderedDict[int,set[str]]:
+def palabras_por_frecuencias(file:str) -> dict[int,set[str]]:
     d:dict[int,set[str]] = dict_invert_set(dict(frecuencias_de_palabras(file)))
-    return OrderedDict(sorted(d.items(), key=lambda t: t[0]))
+    return dict(sorted(d.items(), key=lambda t: t[0]))
  
-def palabra_en_lineas(file:str) -> OrderedDict[str,set[int]]:
+def palabra_en_lineas(file:str) -> dict[str,set[int]]:
     palabras:Iterable[tuple[int,str]] = palabras_lineas(file)
     d:dict[str,set[int]] = grouping_set(palabras,key=lambda e: e[1], value=lambda e: e[0])
-    return OrderedDict(sorted(d.items(), key=lambda t: t[0]))
+    return dict(sorted(d.items(), key=lambda t: t[0]))
 
 def palabras_frecuentes(file:str, k:int)->list[str]:
     return [p for p,_ in Counter(palabras_no_huecas(file)).most_common(k)]
@@ -95,10 +95,16 @@ def test4():
 
 def test5():
     print(palabras_frecuentes(absolute_path("resources/quijote.txt"), 10))
+    
+def test6():
+    file:str = absolute_path("resources/quijote.txt")
+    f:dict[str,int]=frecuencias_de_palabras(file)
+    d:dict[str,int] = {k: v for k, v in f.items() if v>100}
+    print(str_dict(d,sep='\n'))
      
 if __name__ == '__main__':
-    test3()
-    print(palabras_huecas())
+    test6()
+#    print(palabras_huecas())
     
     
     
