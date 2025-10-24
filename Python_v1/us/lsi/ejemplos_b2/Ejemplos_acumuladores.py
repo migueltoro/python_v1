@@ -25,8 +25,9 @@ Acumuladores
     all_different(it) True si todos los elementos del iterable it son distintos
     mean(it) media de los elementos del iterable it
     pstdev(it) desviación típica de los elementos del iterable it
-    tolist(it) convierte el iterable it en una lista
-    toset(it) convierte el iterable it en un conjunto
+    list(it) convierte el iterable it en una lista
+    set(it) convierte el iterable it en un conjunto
+    dict(it) convierte el iterable it de pares clave-valor en un dicccionario 
     reduce(f,it) aplica la función f a los elementos del iterable it de forma acumulativa
     first(it,p) devuelve el primer elemento del iterable it que cumple el predicado p
     count(it,p) cuenta los elementos del iterable it que cumplen el predicado p

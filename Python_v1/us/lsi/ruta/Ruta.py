@@ -9,13 +9,10 @@ from us.lsi.ruta.Marca import Marca
 from us.lsi.ruta.Intervalo import Intervalo, Type
 from us.lsi.tools.File import iterable_de_csv, absolute_path
 from us.lsi.tools.Dict import str_dict
-from us.lsi.tools import Graphics
-from us.lsi.tools import Draw
-from itertools import accumulate 
-from us.lsi.tools.GraphicsMaps import  polyline, set_tipo, TipoMapa
 from collections import Counter
 from statistics import mean
 from typing import Optional
+from us.lsi.tools.Iterable import grouping_reduce,grouping_list,grouping_set
 
 class Ruta:
     
@@ -72,6 +69,34 @@ class Ruta:
         return mean(self.intervalo(i).longitud for i in range(0,self.n-1) if self.intervalo(i).desnivel < 0)
     
     @property
+    def el_mayor(self) -> Optional[Intervalo]:
+        return max((self.intervalo(i)  for i in range(0,self.n-1)), key=lambda e:e.longitud)
+    
+    @property
+    def todos_mayores_que_cero(self) -> bool:
+        return all(self.intervalo(i).longitud > 0  for i in range(0,self.n-1))
+    
+    def alguno_mayor_que_valor(self,a:float) -> bool:
+        return any(self.intervalo(i).longitud > a  for i in range(0,self.n-1))
+    
+    @property
+    def contar_por_tipo(self)->Counter[Type]:
+        return Counter(self.intervalo(i).type  for i in range(0,self.n-1))
+    
+    @property
+    def sumar_longitud_por_tipo(self)->dict[Type,float]:
+        return grouping_reduce((self.intervalo(i) for i in range(0,self.n-1)),\
+                               key=lambda e:e.type,op=lambda a,b:a+b,value=lambda e:e.longitud)
+    
+    @property
+    def agrupar_por_tipo_en_lista(self)->dict[Type,list[Intervalo]]:
+        return grouping_list((self.intervalo(i) for i in range(0,self.n-1)),key=lambda e:e.type)
+        
+    @property
+    def agrupar_por_tipo_en_conjunto(self)->dict[Type,set[Intervalo]]:
+        return grouping_set((self.intervalo(i) for i in range(0,self.n-1)),key=lambda e:e.type)
+    
+    @property
     def tiempo2(self) -> float:
         r:float= 0.
         for i in range(0,self.n-1):
@@ -100,9 +125,7 @@ class Ruta:
         for i in range(0,self.n-1):
             r += self.intervalo(i).tiempo
             n +=1
-        return r/n
-    
-    
+        return r/n 
        
     @property
     def media_desnivel_decreciente_acumulado2(self) -> Optional[float]:
@@ -117,10 +140,6 @@ class Ruta:
         return r/n
     
     @property
-    def todos_mayores_que_cero(self) -> bool:
-        return all(self.intervalo(i).longitud > 0  for i in range(0,self.n-1))
-    
-    @property
     def todos_mayores_que_cero2(self) -> bool: 
         r: bool = True
         for i in range(0,self.n-1):
@@ -128,11 +147,6 @@ class Ruta:
             if  not r:
                 break
         return r
-    
-    
-    def alguno_mayor_que_valor(self,a:float) -> bool:
-        return any(self.intervalo(i).longitud > a  for i in range(0,self.n-1))
-    
    
     def alguno_mayor_que_valor2(self,a:float) -> bool: 
         r: bool = False
@@ -141,10 +155,6 @@ class Ruta:
             if  r:
                 break
         return r
-    
-    @property
-    def el_mayor(self) -> Optional[Intervalo]:
-        return max((self.intervalo(i)  for i in range(0,self.n-1)), key=lambda e:e.longitud)
     
     @property
     def el_mayor2(self) ->  Optional[Intervalo]: 
@@ -156,7 +166,7 @@ class Ruta:
         return r
     
     @property
-    def contar_por_tipo(self)->dict[Type,int]:
+    def contar_por_tipo2(self)->dict[Type,int]:
         r: dict[Type,int] = {}
         for i in range(0,self.n-1):
             key: Type = self.intervalo(i).type
@@ -167,11 +177,7 @@ class Ruta:
         return r
     
     @property
-    def contar_por_tipo2(self)->Counter[Type]:
-        return Counter(self.intervalo(i).type  for i in range(0,self.n-1))
-    
-    @property
-    def sumar_por_tipo(self)->dict[Type,float]:
+    def sumar_longitud_por_tipo2(self)->dict[Type,float]:
         r: dict[Type,float] = {}
         for i in range(0,self.n-1):
             key: Type = self.intervalo(i).type
@@ -182,7 +188,7 @@ class Ruta:
         return r
     
     @property
-    def agrupar_por_tipo_en_lista(self)->dict[Type,list[Intervalo]]:
+    def agrupar_por_tipo_en_lista2(self)->dict[Type,list[Intervalo]]:
         r: dict[Type,list[Intervalo]] = {}
         for i in range(0,self.n-1):
             key: Type = self.intervalo(i).type
@@ -193,7 +199,7 @@ class Ruta:
         return r
     
     @property
-    def agrupar_por_tipo_en_conjunto(self)->dict[Type,set[Intervalo]]:
+    def agrupar_por_tipo_en_conjunto2(self)->dict[Type,set[Intervalo]]:
         r: dict[Type,set[Intervalo]] = {}
         for i in range(0,self.n-1):
             key: Type = self.intervalo(i).type
@@ -202,7 +208,8 @@ class Ruta:
             else:
                 r[key] =  {self.intervalo(i)}                 
         return r
-            
+    
+    '''        
     def mostrar_altitud(self)->None:
         distancias = list(accumulate((self.intervalo(i).longitud for i in range(0, self.n-1)),initial=0))
         alturas = [self.marcas[i].coordenadas.altitud for i in range(0,self.n)]     
@@ -224,6 +231,7 @@ class Ruta:
         set_tipo(TipoMapa.Google)
         coordenadas = [c.coordenadas.to2D for c in self.marcas]
         polyline(fileOut,coordenadas)
+    '''
 
 if __name__ == '__main__':
     r = Ruta.parse(absolute_path("resources/ruta.csv"));
@@ -231,16 +239,16 @@ if __name__ == '__main__':
     print(r)
     print("__________")
 #    r.mostrar_altitud()
-    r.mostrar_altitud_google("../../../ficheros/alturasGoogle.html")
+#    r.mostrar_altitud_google("../../../ficheros/alturasGoogle.html")
 #    r.mostrar_mapa_google("../../../ficheros/mapaGoogle.html")
 #    r.mostrar_mapa_bing("../../../ficheros/mapaBing.html")
 
     print(r.tiempo)
     print(r.el_mayor)
     print(str_dict(r.contar_por_tipo,sep='\n',suffix="\n__________"))
-   
     print(str_dict(r.contar_por_tipo2,sep='\n',suffix="\n__________"))
-    print(str_dict(r.sumar_por_tipo,sep='\n',suffix="\n__________"))
+    print(str_dict(r.sumar_longitud_por_tipo,sep='\n',suffix="\n__________"))
+    print(str_dict(r.sumar_longitud_por_tipo2,sep='\n',suffix="\n__________"))
 
     
     

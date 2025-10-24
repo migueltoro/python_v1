@@ -9,7 +9,7 @@ import re
 from us.lsi.tools.File import lineas_de_fichero, absolute_path
 from typing import Optional
 
-sep = r'[ ,;.\n():?!\"]'
+sep = r'[^\wáéíóúÁÉÍÓÚñÑ]+'
 
 def palabras_huecas() -> set[str]:
     lns:list[str] = lineas_de_fichero(absolute_path("resources/palabras_huecas.txt"))
