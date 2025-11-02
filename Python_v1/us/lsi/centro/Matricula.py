@@ -24,7 +24,7 @@ class Matricula:
         return Matricula(partes[0],int(partes[1]),int(partes[2]))
     
     @property
-    def grupo(self):
+    def grupo(self)->Grupo:
         return Grupo.of(self.ida,self.idg)
 
 

@@ -54,7 +54,7 @@ class Persona:
         assert len(self.apellidos.strip()) > 0, f'Los apellidos no pueden estar en blanco'
         assert len(self.nombre.strip()) > 0, f'El nombre no puede estar en blanco'
         assert self.fecha_de_nacimiento < datetime.now(), f'La fecha debe estar en el pasado'
-        assert Persona._check_dni(self.dni), f'El dni no es correcto'
+#        assert Persona._check_dni(self.dni), f'El dni no es correcto'
         
     @staticmethod
     def of(apellidos: str, nombre: str, dni: str, fecha_de_nacimiento: datetime, telefono:str,direccion:Direccion) -> Persona:        

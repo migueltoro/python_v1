@@ -68,7 +68,6 @@ class Centro:
         return len(self.grupos)
     
 
-
 if __name__ == '__main__':
     c:Centro = Centro.of()
     print(f'- Hay {Centro.of().alumnos.size} alumnos en el centro')
