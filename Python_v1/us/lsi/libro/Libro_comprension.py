@@ -4,6 +4,36 @@ Created on 25 jul. 2020
 @author: migueltoro
 '''
 
+'''
+Aqui pretedemos responder a preguntas sobre el libro El Quijote usando compresión. Para ello primero determinamos 
+los posibes iterables y luego los combianmos con acumuladores adecuados para responder a las preguntas.
+
+Implemente los siguientes iterables:
+
+- Iterable de lineas del libro
+- Iterable de palabras no huecas del libro
+- Iterable de palabras no huecas distintas del libro
+- Iterable de tuplas (numero_de_linea,palabra) del libro
+
+Combinarlo con el acumulador adecuado para responder a las siguientes preguntas:
+
+- Conjunto de palabras huecas
+- Numero de lineas del libro
+- Numero de palabras no huecas del libro
+- Numero de palabras no huecas distintas no huecas del libro
+- Longitud media de las lineas del libro
+- Numero de lineas vacias del libro
+- Linea mas larga del libro
+- Primera linea que contiene una palabra dada
+- Linea numero n del libro
+- Frecuencias de palabras del libro
+- Frecuencias de cada palabras en el libro
+- Palabras mas frecuentes del libro
+- Lineas en las que aparece cada palabra
+
+
+'''
+
 from typing import Iterable,Optional
 from us.lsi.tools.File import lineas_de_fichero, encoding, absolute_path, iterable_de_fichero
 from us.lsi.tools.Dict import str_dict, dict_invert_set

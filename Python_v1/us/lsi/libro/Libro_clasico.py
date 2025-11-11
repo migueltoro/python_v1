@@ -4,6 +4,27 @@ Created on 7 dic 2022
 @author: migueltoro
 '''
 
+'''
+Aqui pretedemos responder a preguntas sobre el libro El Quijote usando un estilo clasico con for, if, etc..
+
+ Responder a las siguientes preguntas:
+
+- Conjunto de palabras huecas
+- Numero de lineas del libro
+- Numero de palabras no huecas del libro
+- Numero de palabras no huecas distintas no huecas del libro
+- Longitud media de las lineas del libro
+- Numero de lineas vacias del libro
+- Linea mas larga del libro
+- Primera linea que contiene una palabra dada
+- Linea numero n del libro
+- Frecuencias de palabras del libro
+- Frecuencias de cada palabras en el libro
+- Palabras mas frecuentes del libro
+- Lineas en las que aparece cada palabra
+'''
+
+
 from collections import Counter
 import re
 from us.lsi.tools.File import lineas_de_fichero, absolute_path
@@ -95,7 +116,7 @@ def primera_linea_con_palabra(file:str,palabra:str) -> Optional[str]:
 def frecuencias_de_palabras(file:str) -> dict[str,int]:
     ph:set[str] = palabras_huecas()
     lns:list[str] = lineas_de_fichero(file)
-    d:dict[str,int]
+    d:dict[str,int] = {}
     for ln in lns:
         for p in re.split(sep,ln):
             if not p in ph:

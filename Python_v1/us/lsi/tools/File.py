@@ -11,6 +11,7 @@ import chardet
 from os.path import abspath, join, isfile
 from os import getcwd
 import sys
+import requests
 
 def root_project()->str:
     return sys.path[1]
@@ -306,13 +307,64 @@ def encoding(file:str)->Optional[str]:
         >>> encoding('path/to/file.txt')
         'utf-8'
     """
-    assert existe_fichero(file),'El fichero {0} no existe'.format(file)
+    assert existe_fichero(file),f'El fichero {file} no existe'
     with open(file,"rb") as f:
         data = f.read()
         enc = chardet.detect(data)
         return enc['encoding']
+    
+def lineas_de_url(url: str) -> list[str]:
+    """
+    Descarga el contenido de la URL dada y devuelve una lista de líneas como strings.
+
+    Args:
+        url (str): La URL del fichero de texto.
+
+    Returns:
+        list[str]: Lista de líneas del fichero descargado.
+
+    Raises:
+        AssertionError: Si no se pudieron obtener líneas de la URL.
+        requests.RequestException: Si ocurre un error de red al acceder a la URL.
+
+    Ejemplo:
+        >>> lineas = lineas_de_url('https://ejemplo.com/fichero.txt')
+        >>> print(lineas)
+        ['línea1', 'línea2', 'línea3']
+    """
+    lineas: Optional[list[str]] = None
+    try:
+        respuesta: requests.Response = requests.get(url)
+        respuesta.raise_for_status()
+        contenido: str = respuesta.text
+        lineas= contenido.splitlines()
+    except requests.RequestException:
+        print(f"Error al acceder a la URL {url}")
+    assert lineas, f"No se pudieron obtener líneas de la URL {url}"
+    return lineas
+
+def descarga_fichero_de_url(file:str,url: str) -> None:
+    """
+    Descarga el contenido de la URL dada y lo guarda en el fichero especificado, línea a línea.
+
+    Args:
+        file (str): Ruta del fichero donde se guardará el contenido.
+        url (str): URL del fichero de texto a descargar.
+
+    Raises:
+        AssertionError: Si no se pudieron obtener líneas de la URL.
+        requests.RequestException: Si ocurre un error de red al acceder a la URL.
+
+    Ejemplo:
+        >>> descarga_fichero_de_url('datos/quijote.txt', 'https://ejemplo.com/quijote.txt')
+        # El contenido de la URL se guarda en 'datos/quijote.txt'
+    """
+    r: list[str] = lineas_de_url(url)
+    write_iterable(file, r)
+
 
 if __name__ == '__main__':
+    '''
     print(sys.path)
     print(getcwd())
     print(root_project())
@@ -327,4 +379,8 @@ if __name__ == '__main__':
     print(sys.path)  
     help(iterable_de_fichero)
     help(lineas_de_csv)
+    '''
+    url:str = 'https://babel.upm.es/~angel/teaching/pps/quijote.txt'
+    r:list[str]=lineas_de_url(url)
+    write_iterable(absolute_path("resources/ppp.txt"), r)
     

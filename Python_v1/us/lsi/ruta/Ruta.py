@@ -14,6 +14,31 @@ from statistics import mean
 from typing import Optional
 from us.lsi.tools.Iterable import grouping_reduce,grouping_list,grouping_set
 
+'''
+La clase epresenta una ruta como una secuencia de marcas. Los iterables de marcas se leen de un fichero CSV. 
+Otro iterable relevante es el de intervalos, que se obtienen a partir de las marcas consecutivas. 
+A partir de él se definen otros literables: longitudes de los intervalos, tiempos de los intervalos, 
+tipos de los intervalos, etc.
+
+Se proporcionan dos versiones de los mismos métodos, una usando comprensión y otra usando bucles explícitos.
+
+Usando el iterable de intervalos y combinaondlo con acumuladores adecuados queremos respoder a las siguientes preguntas:
+
+- ¿Cuál es el tiempo total de la ruta?
+- ¿Cuál es la longitud total de la ruta?
+- ¿Cuál es la velocidad media de la ruta?
+- ¿Cuál es el desnivel creciente acumulado de la ruta?
+- ¿Cuál es el tiempo medio de los intervalos de la ruta?
+- ¿Cual es el intervalo más largo?
+- ¿Son todos los intervalos mayores que cero?
+- ¿Existe algún intervalo mayor que un valor dado?
+- ¿Cuántos intervalos hay de cada tipo?
+- ¿Cuál es la suma de las longitudes de los intervalos de cada tipo?
+- ¿Cuáles son los intervalos de cada tipo arupados en listas?
+- ¿Cuáles son los intervalos de cada tipo agrupados en conjuntos?
+
+'''
+
 class Ruta:
     
     def __init__(self, marcas:list[Marca])->None:
